@@ -12,6 +12,10 @@ namespace Lexer.Controller
         private static Hashtable _operators;
         private static Hashtable _symbols;
 
+        public string GetReservedWords(object key) => _reservedWords[key].ToString();
+        public string GetOperators(object key) => _operators[key].ToString();
+        public string GetSymbols(object key) => _symbols[key].ToString();
+
         public LexerController()
         {
             _reservedWords = AddReservedWords();
@@ -22,6 +26,20 @@ namespace Lexer.Controller
         public IEnumerable<TokenViewModel> FindToken(ToValidateViewModel toValidate)
         {
             List<TokenViewModel> tokenList = null;
+            toValidate.StringPosition = FirstCharacterPosition(toValidate.Text);
+
+            for (int i = toValidate.StringPosition; i < toValidate.Text.Length; i++)
+            {
+                toValidate.CharToValidate = toValidate.Text[i];
+
+                if (char.IsWhiteSpace(toValidate.CharToValidate))
+                {
+                    tokenList.Add(ToToken(toValidate.TextToValidate));
+                }
+
+                toValidate.TextToValidate += toValidate.CharToValidate;
+            }
+            
             return tokenList;
         }
 
@@ -38,15 +56,54 @@ namespace Lexer.Controller
         private TokenViewModel ToToken(string textToValidate)
         {
             TokenViewModel token = null;
-            token.TypeToken = Token.IDENTIFIER;
+            if (IsReservedWord(textToValidate))
+            {
+                token.TypeToken = Token.RESERVED;
+            }
+            else if (IsOperator(textToValidate))
+            {
+                token.TypeToken = Token.OPERATOR;
+            }
+            else if (IsSymbol(textToValidate))
+            {
+                token.TypeToken = Token.SYMBOL;
+            }
+            else if (IsIdentifier(textToValidate))
+            {
+                token.TypeToken = Token.IDENTIFIER;
+            }
+            else
+            {
+                token.TypeToken = Token.NOT_FOUND;
+            }
             token.Text = textToValidate;
             return token;
+        }
+
+        private bool IsReservedWord (string text)
+        {
+            return true;
+        }
+
+        private bool IsOperator(string text)
+        {
+            return true;
+        }
+
+        private bool IsSymbol(string text)
+        {
+            return true;
+        }
+
+        private bool IsIdentifier(string text)
+        {
+            return true;
         }
 
         private Hashtable AddReservedWords()
         {
             Hashtable reservedWords = null;
-            reservedWords.Add("if","Reserved_if");
+            reservedWords.Add("if", "Reserved_if");
             reservedWords.Add("else", "Reserved_else");
             reservedWords.Add("while", "Reserved_while");
             reservedWords.Add("for", "Reserved_for");
