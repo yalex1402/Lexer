@@ -1,7 +1,9 @@
 ﻿using Lexer.Forms.Enums;
 using Lexer.Model;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Lexer.Controller
 {
@@ -26,6 +28,7 @@ namespace Lexer.Controller
         public IEnumerable<TokenViewModel> FindToken(ToValidateViewModel toValidate)
         {
             bool ban;
+            bool IsQuote = false;
 
             AddLanguage();
 
@@ -35,9 +38,15 @@ namespace Lexer.Controller
             for (int i = toValidate.StringPosition; i < toValidate.Text.Length; i++)
             {
                 ban = false;
+                
                 toValidate.CharToValidate = toValidate.Text[i];
 
-                if (char.IsWhiteSpace(toValidate.CharToValidate))
+                if (toValidate.CharToValidate.ToString().Equals("'"))
+                {
+                    IsQuote = !IsQuote;
+                }
+
+                if (char.IsWhiteSpace(toValidate.CharToValidate) && (!IsQuote))
                 {
                     tokenList.Add(ToToken(toValidate.TextToValidate));
                     toValidate.TextToValidate = "";
@@ -81,7 +90,18 @@ namespace Lexer.Controller
             }
             else if (IsIdentifier(textToValidate))
             {
-                token.TypeToken = Token.IDENTIFIER;
+                if (IsNumericIdentifier(textToValidate))
+                {
+                    token.TypeToken = Token.NUM_IDENTIFIER;
+                }
+                else if (IsStringIdentifier(textToValidate))
+                {
+                    token.TypeToken = Token.STRING;
+                }
+                else
+                {
+                    token.TypeToken = Token.IDENTIFIER;
+                }
             }
             else
             {
@@ -120,7 +140,44 @@ namespace Lexer.Controller
 
         private bool IsIdentifier(string text)
         {
-            return true;
+            if (IsNumericIdentifier(text) || IsStringIdentifier(text) || IsVariableIdentifier(text))
+            {
+                return true;
+            }            
+            return false;
+        }
+
+        private bool IsNumericIdentifier(string text)
+        {
+            var regexNumeric = @"[0-9]+";
+            Match match = Regex.Match(text, regexNumeric);
+            if (match.Success)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsVariableIdentifier(string text)
+        {
+            var regexVariable = @"[_a-zA-Z]{1}[_a-zA-Z0-9]";
+            Match match = Regex.Match(text, regexVariable);
+            if (match.Success)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsStringIdentifier(string text)
+        {
+            var regexString = @"'[^\n]*'";
+            Match match = Regex.Match(text, regexString);
+            if (match.Success)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void AddReservedWords()

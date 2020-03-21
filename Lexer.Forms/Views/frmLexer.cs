@@ -21,12 +21,17 @@ namespace Lexer.Forms.Views
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            txtResult.Text = "";
             ToValidateViewModel view = new ToValidateViewModel
             {
                 Text = txtCode.Text + " "
             };
             LexerController lexer = new LexerController();
-            lexer.FindToken(view);
+            IEnumerable<TokenViewModel> result = lexer.FindToken(view);
+            foreach (var item in result)
+            {
+                txtResult.Text += $"The token type for {item.Text} is {item.TypeToken.ToString()} \n"; 
+            }
         }
     }
 }

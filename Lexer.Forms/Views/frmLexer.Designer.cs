@@ -32,7 +32,7 @@
             this.txtCode = new System.Windows.Forms.RichTextBox();
             this.btnRun = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lvResults = new System.Windows.Forms.ListView();
+            this.txtResult = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +73,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.lvResults);
+            this.groupBox2.Controls.Add(this.txtResult);
             this.groupBox2.Location = new System.Drawing.Point(12, 258);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(732, 164);
@@ -81,17 +81,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Results:";
             // 
-            // lvResults
+            // txtResult
             // 
-            this.lvResults.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.lvResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvResults.ForeColor = System.Drawing.SystemColors.Info;
-            this.lvResults.HideSelection = false;
-            this.lvResults.Location = new System.Drawing.Point(7, 20);
-            this.lvResults.Name = "lvResults";
-            this.lvResults.Size = new System.Drawing.Size(719, 133);
-            this.lvResults.TabIndex = 0;
-            this.lvResults.UseCompatibleStateImageBehavior = false;
+            this.txtResult.BackColor = System.Drawing.SystemColors.InfoText;
+            this.txtResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtResult.ForeColor = System.Drawing.SystemColors.Info;
+            this.txtResult.Location = new System.Drawing.Point(7, 19);
+            this.txtResult.Name = "txtResult";
+            this.txtResult.Size = new System.Drawing.Size(719, 139);
+            this.txtResult.TabIndex = 1;
+            this.txtResult.Text = "";
             // 
             // frmLexer
             // 
@@ -115,6 +114,6 @@
         private System.Windows.Forms.RichTextBox txtCode;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListView lvResults;
+        private System.Windows.Forms.RichTextBox txtResult;
     }
 }
