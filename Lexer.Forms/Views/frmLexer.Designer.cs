@@ -40,9 +40,11 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtCode);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(627, 240);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(836, 295);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Write your code!";
@@ -52,9 +54,10 @@
             this.txtCode.BackColor = System.Drawing.SystemColors.InfoText;
             this.txtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCode.ForeColor = System.Drawing.SystemColors.Info;
-            this.txtCode.Location = new System.Drawing.Point(7, 20);
+            this.txtCode.Location = new System.Drawing.Point(9, 25);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(614, 212);
+            this.txtCode.Size = new System.Drawing.Size(817, 260);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = "";
             // 
@@ -63,9 +66,10 @@
             this.btnRun.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRun.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.btnRun.Location = new System.Drawing.Point(664, 93);
+            this.btnRun.Location = new System.Drawing.Point(885, 114);
+            this.btnRun.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(80, 28);
+            this.btnRun.Size = new System.Drawing.Size(107, 34);
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = false;
@@ -74,9 +78,11 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtResult);
-            this.groupBox2.Location = new System.Drawing.Point(12, 258);
+            this.groupBox2.Location = new System.Drawing.Point(16, 318);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(732, 164);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(976, 202);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Results:";
@@ -86,20 +92,23 @@
             this.txtResult.BackColor = System.Drawing.SystemColors.InfoText;
             this.txtResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtResult.ForeColor = System.Drawing.SystemColors.Info;
-            this.txtResult.Location = new System.Drawing.Point(7, 19);
+            this.txtResult.Location = new System.Drawing.Point(9, 23);
+            this.txtResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(719, 139);
+            this.txtResult.Size = new System.Drawing.Size(957, 170);
             this.txtResult.TabIndex = 1;
             this.txtResult.Text = "";
             // 
             // frmLexer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(771, 450);
+            this.BackColor = System.Drawing.Color.Maroon;
+            this.ClientSize = new System.Drawing.Size(1028, 554);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmLexer";
             this.Text = "frmLexer";
             this.groupBox1.ResumeLayout(false);
