@@ -149,7 +149,7 @@ namespace Lexer.Controller
 
         private bool IsNumericIdentifier(string text)
         {
-            var regexNumeric = @"[0-9]+";
+            var regexNumeric = @"^[0-9]*$";
             Match match = Regex.Match(text, regexNumeric);
             if (match.Success)
             {
@@ -171,7 +171,7 @@ namespace Lexer.Controller
 
         public bool IsStringIdentifier(string text)
         {
-            var regexString = @"'[^\n]*'";
+            var regexString = "^'[A-Za-z ]*'$";
             Match match = Regex.Match(text, regexString);
             if (match.Success)
             {
