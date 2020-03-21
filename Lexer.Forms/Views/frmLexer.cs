@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lexer.Controller;
+using Lexer.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,16 @@ namespace Lexer.Forms.Views
         public frmLexer()
         {
             InitializeComponent();
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            ToValidateViewModel view = new ToValidateViewModel
+            {
+                Text = txtCode.Text + " "
+            };
+            LexerController lexer = new LexerController();
+            lexer.FindToken(view);
         }
     }
 }

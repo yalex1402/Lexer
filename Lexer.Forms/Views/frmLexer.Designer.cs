@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtCode = new System.Windows.Forms.RichTextBox();
             this.btnRun = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtCode = new System.Windows.Forms.RichTextBox();
             this.lvResults = new System.Windows.Forms.ListView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -47,14 +47,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Write your code!";
             // 
+            // txtCode
+            // 
+            this.txtCode.BackColor = System.Drawing.SystemColors.InfoText;
+            this.txtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCode.ForeColor = System.Drawing.SystemColors.Info;
+            this.txtCode.Location = new System.Drawing.Point(7, 20);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(614, 212);
+            this.txtCode.TabIndex = 0;
+            this.txtCode.Text = "";
+            // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(669, 93);
+            this.btnRun.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRun.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.btnRun.Location = new System.Drawing.Point(664, 93);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.Size = new System.Drawing.Size(80, 28);
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.UseVisualStyleBackColor = false;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // groupBox2
             // 
@@ -66,16 +81,11 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Results:";
             // 
-            // txtCode
-            // 
-            this.txtCode.Location = new System.Drawing.Point(7, 20);
-            this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(614, 212);
-            this.txtCode.TabIndex = 0;
-            this.txtCode.Text = "";
-            // 
             // lvResults
             // 
+            this.lvResults.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.lvResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvResults.ForeColor = System.Drawing.SystemColors.Info;
             this.lvResults.HideSelection = false;
             this.lvResults.Location = new System.Drawing.Point(7, 20);
             this.lvResults.Name = "lvResults";

@@ -12,6 +12,8 @@ namespace Lexer.Forms.Enums
         OPERATOR,
         SYMBOL,
         IDENTIFIER,
+        NUM_IDENTIFIER,
+        STRING,
         NOT_FOUND
     }
 }

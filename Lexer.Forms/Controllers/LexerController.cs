@@ -8,36 +8,47 @@ namespace Lexer.Controller
     public class LexerController
     {
 
-        private static Hashtable _reservedWords;
-        private static Hashtable _operators;
-        private static Hashtable _symbols;
+        private Hashtable _reservedWords;
+        private Hashtable _operators;
+        private Hashtable _symbols;
 
-        public string GetReservedWords(object key) => _reservedWords[key].ToString();
-        public string GetOperators(object key) => _operators[key].ToString();
-        public string GetSymbols(object key) => _symbols[key].ToString();
+        public string GetReservedWords(string key) => _reservedWords[key].ToString();
+        public string GetOperators(string key) => _operators[key].ToString();
+        public string GetSymbols(string key) => _symbols[key].ToString();
 
         public LexerController()
         {
-            _reservedWords = AddReservedWords();
-            _operators = AddOperators();
-            _symbols = AddSymbols();
+            _reservedWords = new Hashtable();
+            _operators = new Hashtable();
+            _symbols = new Hashtable();
         }
 
         public IEnumerable<TokenViewModel> FindToken(ToValidateViewModel toValidate)
         {
-            List<TokenViewModel> tokenList = null;
+            bool ban;
+
+            AddLanguage();
+
+            List<TokenViewModel> tokenList = new List<TokenViewModel>();
             toValidate.StringPosition = FirstCharacterPosition(toValidate.Text);
 
             for (int i = toValidate.StringPosition; i < toValidate.Text.Length; i++)
             {
+                ban = false;
                 toValidate.CharToValidate = toValidate.Text[i];
 
                 if (char.IsWhiteSpace(toValidate.CharToValidate))
                 {
                     tokenList.Add(ToToken(toValidate.TextToValidate));
+                    toValidate.TextToValidate = "";
+                    ban = true;
                 }
 
-                toValidate.TextToValidate += toValidate.CharToValidate;
+                if (!ban)
+                {
+                    toValidate.TextToValidate += toValidate.CharToValidate;
+                }
+                
             }
             
             return tokenList;
@@ -55,7 +66,7 @@ namespace Lexer.Controller
 
         private TokenViewModel ToToken(string textToValidate)
         {
-            TokenViewModel token = null;
+            TokenViewModel token = new TokenViewModel();
             if (IsReservedWord(textToValidate))
             {
                 token.TypeToken = Token.RESERVED;
@@ -82,17 +93,29 @@ namespace Lexer.Controller
 
         private bool IsReservedWord (string text)
         {
-            return true;
+            if (_reservedWords.ContainsKey(text))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsOperator(string text)
         {
-            return true;
+            if (_operators.ContainsKey(text))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsSymbol(string text)
         {
-            return true;
+            if (_symbols.ContainsKey(text))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsIdentifier(string text)
@@ -100,50 +123,51 @@ namespace Lexer.Controller
             return true;
         }
 
-        private Hashtable AddReservedWords()
+        private void AddReservedWords()
         {
-            Hashtable reservedWords = null;
-            reservedWords.Add("if", "Reserved_if");
-            reservedWords.Add("else", "Reserved_else");
-            reservedWords.Add("while", "Reserved_while");
-            reservedWords.Add("for", "Reserved_for");
-            reservedWords.Add("next", "Reserved_next");
-            reservedWords.Add("case", "Reserved_case");
-            reservedWords.Add("print", "Reserved_print");
-            return reservedWords;
+            _reservedWords.Add("if", "Reserved_if");
+            _reservedWords.Add("else", "Reserved_else");
+            _reservedWords.Add("while", "Reserved_while");
+            _reservedWords.Add("for", "Reserved_for");
+            _reservedWords.Add("next", "Reserved_next");
+            _reservedWords.Add("case", "Reserved_case");
+            _reservedWords.Add("print", "Reserved_print");
         }
 
-        private Hashtable AddOperators()
+        private void AddOperators()
         {
-            Hashtable reservedWords = null;
-            reservedWords.Add("+", "op_add");
-            reservedWords.Add("-", "op_substract");
-            reservedWords.Add("*", "op_multiply");
-            reservedWords.Add("/", "op_divide");
-            reservedWords.Add("%", "op_mod");
-            reservedWords.Add("<", "op_less");
-            reservedWords.Add("<=", "op_lessequal");
-            reservedWords.Add(">", "op_greater");
-            reservedWords.Add(">=", "op_greaterequal");
-            reservedWords.Add("==", "op_equal");
-            reservedWords.Add("!=", "op_notequal");
-            reservedWords.Add("!", "op_not");
-            reservedWords.Add("=", "op_assigment");
-            reservedWords.Add("&&", "op_and");
-            reservedWords.Add("||", "op_or");
-            return reservedWords;
+            _operators.Add("+", "op_add");
+            _operators.Add("-", "op_substract");
+            _operators.Add("*", "op_multiply");
+            _operators.Add("/", "op_divide");
+            _operators.Add("%", "op_mod");
+            _operators.Add("<", "op_less");
+            _operators.Add("<=", "op_lessequal");
+            _operators.Add(">", "op_greater");
+            _operators.Add(">=", "op_greaterequal");
+            _operators.Add("==", "op_equal");
+            _operators.Add("!=", "op_notequal");
+            _operators.Add("!", "op_not");
+            _operators.Add("=", "op_assigment");
+            _operators.Add("&&", "op_and");
+            _operators.Add("||", "op_or");
         }
 
-        private Hashtable AddSymbols()
+        private void AddSymbols()
         {
-            Hashtable reservedWords = null;
-            reservedWords.Add("(", "LeftParen");
-            reservedWords.Add(")", "RightParen");
-            reservedWords.Add("{", "LeftBrace");
-            reservedWords.Add("}", "RightBrace");
-            reservedWords.Add(";", "Semi-Colon");
-            reservedWords.Add(",", "Comma");
-            return reservedWords;
+            _symbols.Add("(", "LeftParen");
+            _symbols.Add(")", "RightParen");
+            _symbols.Add("{", "LeftBrace");
+            _symbols.Add("}", "RightBrace");
+            _symbols.Add(";", "Semi-Colon");
+            _symbols.Add(",", "Comma");
+        }
+
+        private void AddLanguage()
+        {
+            AddReservedWords();
+            AddOperators();
+            AddSymbols();
         }
 
     }
