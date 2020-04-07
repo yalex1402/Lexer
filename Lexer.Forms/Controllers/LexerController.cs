@@ -46,7 +46,8 @@ namespace Lexer.Controller
                     IsQuote = !IsQuote;
                 }
 
-                if (char.IsWhiteSpace(toValidate.CharToValidate) && (!IsQuote))
+                if ((char.IsWhiteSpace(toValidate.CharToValidate) || IsParen(toValidate.CharToValidate))
+                    && (!IsQuote) && toValidate.TextToValidate != "" )
                 {
                     tokenList.Add(ToToken(toValidate.TextToValidate));
                     toValidate.TextToValidate = "";
@@ -109,6 +110,15 @@ namespace Lexer.Controller
             }
             token.Text = textToValidate;
             return token;
+        }
+
+        private bool IsParen(char textToValidate)
+        {
+            if (textToValidate.ToString() =="(" || textToValidate.ToString() == ")")
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsReservedWord (string text)

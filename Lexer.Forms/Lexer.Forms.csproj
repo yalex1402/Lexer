@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\LexerController.cs" />
+    <Compile Include="Controllers\SintaxController.cs" />
     <Compile Include="Enums\Token.cs" />
     <Compile Include="Models\TokenViewModel.cs" />
     <Compile Include="Models\ToValidateViewModel.cs" />
