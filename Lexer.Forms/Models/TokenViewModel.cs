@@ -8,5 +8,7 @@ namespace Lexer.Model
         public Token TypeToken { get; set; }
 
         public string Text { get; set; }
+
+        public string TextToIdentifier { get; set; }
     }
 }

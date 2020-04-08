@@ -25,7 +25,7 @@ namespace Lexer.Controller
             _symbols = new Hashtable();
         }
 
-        public IEnumerable<TokenViewModel> FindToken(ToValidateViewModel toValidate)
+        public List<TokenViewModel> FindToken(ToValidateViewModel toValidate)
         {
             bool ban;
             bool IsQuote = false;
@@ -46,15 +46,15 @@ namespace Lexer.Controller
                     IsQuote = !IsQuote;
                 }
 
-                if ((char.IsWhiteSpace(toValidate.CharToValidate) || IsParen(toValidate.CharToValidate))
-                    && (!IsQuote) && toValidate.TextToValidate != "" )
+                if ((char.IsWhiteSpace(toValidate.CharToValidate) || IsParen(toValidate.CharToValidate) 
+                        || IsComma(toValidate.CharToValidate)) && (!IsQuote) && toValidate.TextToValidate != "" )
                 {
                     tokenList.Add(ToToken(toValidate.TextToValidate));
                     toValidate.TextToValidate = "";
                     ban = true;
                 }
 
-                if (!ban)
+                if (!ban && !char.IsWhiteSpace(toValidate.CharToValidate))
                 {
                     toValidate.TextToValidate += toValidate.CharToValidate;
                 }
@@ -80,33 +80,40 @@ namespace Lexer.Controller
             if (IsReservedWord(textToValidate))
             {
                 token.TypeToken = Token.RESERVED;
+                token.TextToIdentifier = GetReservedWords(textToValidate);
             }
             else if (IsOperator(textToValidate))
             {
                 token.TypeToken = Token.OPERATOR;
+                token.TextToIdentifier = GetOperators(textToValidate);
             }
             else if (IsSymbol(textToValidate))
             {
                 token.TypeToken = Token.SYMBOL;
+                token.TextToIdentifier = GetSymbols(textToValidate);
             }
             else if (IsIdentifier(textToValidate))
             {
                 if (IsNumericIdentifier(textToValidate))
                 {
                     token.TypeToken = Token.NUM_IDENTIFIER;
+                    token.TextToIdentifier = "Integer";
                 }
                 else if (IsStringIdentifier(textToValidate))
                 {
                     token.TypeToken = Token.STRING;
+                    token.TextToIdentifier = "String";
                 }
                 else
                 {
                     token.TypeToken = Token.IDENTIFIER;
+                    token.TextToIdentifier = "Identifier";
                 }
             }
             else
             {
                 token.TypeToken = Token.NOT_FOUND;
+                token.TextToIdentifier = "";
             }
             token.Text = textToValidate;
             return token;
@@ -115,6 +122,15 @@ namespace Lexer.Controller
         private bool IsParen(char textToValidate)
         {
             if (textToValidate.ToString() =="(" || textToValidate.ToString() == ")")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsComma(char textToValidate)
+        {
+            if (textToValidate.ToString() == ",")
             {
                 return true;
             }

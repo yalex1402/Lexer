@@ -27,10 +27,10 @@ namespace Lexer.Forms.Views
                 Text = txtCode.Text + " "
             };
             LexerController lexer = new LexerController();
-            IEnumerable<TokenViewModel> result = lexer.FindToken(view);
+            List<TokenViewModel> result = lexer.FindToken(view);
             foreach (var item in result)
             {
-                txtResult.Text += $"The token type for {item.Text} is {item.TypeToken.ToString()} \n"; 
+                txtResult.Text += $"Token for {item.Text} is {item.TypeToken.ToString()} and {item.TextToIdentifier}\n"; 
             }
         }
     }
