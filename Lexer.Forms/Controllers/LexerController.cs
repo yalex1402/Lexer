@@ -1,4 +1,5 @@
 ﻿using Lexer.Forms.Enums;
+using Lexer.Forms.Helpers;
 using Lexer.Model;
 using System;
 using System.Collections;
@@ -13,16 +14,62 @@ namespace Lexer.Controller
         private Hashtable _reservedWords;
         private Hashtable _operators;
         private Hashtable _symbols;
+        private readonly ISymbolsHelper _symbolsHelper;
 
         public string GetReservedWords(string key) => _reservedWords[key].ToString();
         public string GetOperators(string key) => _operators[key].ToString();
         public string GetSymbols(string key) => _symbols[key].ToString();
 
-        public LexerController()
+        public LexerController(ISymbolsHelper symbolsHelper)
         {
             _reservedWords = new Hashtable();
             _operators = new Hashtable();
             _symbols = new Hashtable();
+            _symbolsHelper = symbolsHelper;
+        }
+
+        public List<TokenViewModel> FindToken(string text)
+        {
+            bool ban;
+            bool IsQuote = false;
+
+            AddLanguage();
+
+            ToValidateViewModel toValidate = new ToValidateViewModel
+            {
+                Text = text
+            };
+
+            List<TokenViewModel> tokenList = new List<TokenViewModel>();
+            toValidate.StringPosition = FirstCharacterPosition(toValidate.Text);
+
+            for (int i = toValidate.StringPosition; i < toValidate.Text.Length; i++)
+            {
+                ban = false;
+
+                toValidate.CharToValidate = toValidate.Text[i];
+
+                if (_symbolsHelper.IsQuote(toValidate.CharToValidate))
+                {
+                    IsQuote = !IsQuote;
+                }
+
+                if ((char.IsWhiteSpace(toValidate.CharToValidate) || _symbolsHelper.IsParen(toValidate.CharToValidate)
+                        || _symbolsHelper.IsComma(toValidate.CharToValidate)) && (!IsQuote) && toValidate.TextToValidate != "")
+                {
+                    tokenList.Add(ToToken(toValidate.TextToValidate));
+                    toValidate.TextToValidate = "";
+                    ban = true;
+                }
+
+                if (!ban && !char.IsWhiteSpace(toValidate.CharToValidate))
+                {
+                    toValidate.TextToValidate += toValidate.CharToValidate;
+                }
+
+            }
+
+            return tokenList;
         }
 
         public List<TokenViewModel> FindToken(ToValidateViewModel toValidate)
@@ -41,13 +88,13 @@ namespace Lexer.Controller
                 
                 toValidate.CharToValidate = toValidate.Text[i];
 
-                if (toValidate.CharToValidate.ToString().Equals("'"))
+                if (_symbolsHelper.IsQuote(toValidate.CharToValidate))
                 {
                     IsQuote = !IsQuote;
                 }
 
-                if ((char.IsWhiteSpace(toValidate.CharToValidate) || IsParen(toValidate.CharToValidate) 
-                        || IsComma(toValidate.CharToValidate)) && (!IsQuote) && toValidate.TextToValidate != "" )
+                if ((char.IsWhiteSpace(toValidate.CharToValidate) || _symbolsHelper.IsParen(toValidate.CharToValidate) 
+                        || _symbolsHelper.IsComma(toValidate.CharToValidate)) && (!IsQuote) && toValidate.TextToValidate != "" )
                 {
                     tokenList.Add(ToToken(toValidate.TextToValidate));
                     toValidate.TextToValidate = "";
@@ -64,7 +111,7 @@ namespace Lexer.Controller
             return tokenList;
         }
 
-        private int FirstCharacterPosition(string text)
+        public int FirstCharacterPosition(string text)
         {
             int position = 0;
             while (char.IsWhiteSpace(text[position]))
@@ -117,24 +164,6 @@ namespace Lexer.Controller
             }
             token.Text = textToValidate;
             return token;
-        }
-
-        private bool IsParen(char textToValidate)
-        {
-            if (textToValidate.ToString() =="(" || textToValidate.ToString() == ")")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsComma(char textToValidate)
-        {
-            if (textToValidate.ToString() == ",")
-            {
-                return true;
-            }
-            return false;
         }
 
         private bool IsReservedWord (string text)

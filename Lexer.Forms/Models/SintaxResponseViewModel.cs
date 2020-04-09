@@ -10,5 +10,6 @@ namespace Lexer.Forms.Models
     public class SintaxResponseViewModel
     {
         public List<TokenViewModel> Tokens { get; set; }
+
     }
 }

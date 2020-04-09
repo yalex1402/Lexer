@@ -1,4 +1,5 @@
-﻿using Lexer.Forms.Views;
+﻿using Lexer.Forms.Helpers;
+using Lexer.Forms.Views;
 using System;
 using System.Windows.Forms;
 
@@ -11,7 +12,8 @@ namespace Lexer.Forms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmLexer());
+            ISymbolsHelper symbolsHelper = new SymbolsHelper();
+            Application.Run(new frmLexer(symbolsHelper));
         }
     }
 }

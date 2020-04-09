@@ -54,6 +54,8 @@
     <Compile Include="Controllers\LexerController.cs" />
     <Compile Include="Controllers\SintaxController.cs" />
     <Compile Include="Enums\Token.cs" />
+    <Compile Include="Helpers\ISymbolsHelper.cs" />
+    <Compile Include="Helpers\SymbolsHelper.cs" />
     <Compile Include="Models\SintaxResponseViewModel.cs" />
     <Compile Include="Models\TokenViewModel.cs" />
     <Compile Include="Models\ToValidateViewModel.cs" />
@@ -95,5 +97,6 @@
   <ItemGroup>
     <None Include="Resources\índice.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

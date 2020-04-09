@@ -1,4 +1,7 @@
 ﻿using Lexer.Controller;
+using Lexer.Forms.Controllers;
+using Lexer.Forms.Helpers;
+using Lexer.Forms.Models;
 using Lexer.Model;
 using System;
 using System.Collections.Generic;
@@ -14,9 +17,12 @@ namespace Lexer.Forms.Views
 {
     public partial class frmLexer : Form
     {
-        public frmLexer()
+        private readonly ISymbolsHelper _symbolsHelper;
+
+        public frmLexer(ISymbolsHelper symbolsHelper)
         {
             InitializeComponent();
+            _symbolsHelper = symbolsHelper;
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -26,7 +32,9 @@ namespace Lexer.Forms.Views
             {
                 Text = txtCode.Text + " "
             };
-            LexerController lexer = new LexerController();
+            SintaxController sintax = new SintaxController(_symbolsHelper);
+            List<SintaxResponseViewModel> result2 = sintax.GetSintaxAnalisis(txtCode.Text + " ");
+            LexerController lexer = new LexerController(_symbolsHelper);
             List<TokenViewModel> result = lexer.FindToken(view);
             foreach (var item in result)
             {
