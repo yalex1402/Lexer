@@ -33,7 +33,7 @@ namespace Lexer.Forms.Views
                 Text = txtCode.Text + " "
             };
             SintaxController sintax = new SintaxController(_symbolsHelper);
-            List<SintaxResponseViewModel> result2 = sintax.GetSintaxAnalisis(txtCode.Text + " ");
+            List<SintaxResponseViewModel> result2 = sintax.GetSintaxAnalisis(txtCode.Text);
             LexerController lexer = new LexerController(_symbolsHelper);
             List<TokenViewModel> result = lexer.FindToken(view);
             foreach (var item in result)

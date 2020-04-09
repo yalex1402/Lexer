@@ -41,6 +41,7 @@ namespace Lexer.Forms.Controllers
                 {
                     _sintaxResponse.Tokens = lexer.FindToken(_toValidate.TextToValidate);
                     _result.Add(_sintaxResponse);
+                    _toValidate.TextToValidate = "";
                 }
             }
             return _result;

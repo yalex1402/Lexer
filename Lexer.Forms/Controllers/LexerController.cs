@@ -26,15 +26,14 @@ namespace Lexer.Controller
             _operators = new Hashtable();
             _symbols = new Hashtable();
             _symbolsHelper = symbolsHelper;
+            AddLanguage();
         }
 
         public List<TokenViewModel> FindToken(string text)
         {
             bool ban;
             bool IsQuote = false;
-
-            AddLanguage();
-
+            
             ToValidateViewModel toValidate = new ToValidateViewModel
             {
                 Text = text
